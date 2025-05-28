@@ -189,8 +189,8 @@ const PredictionPage = () => {
               Analyze Image
             </Button>
           </motion.div>
-          <AnimatePresence>
-            {error && (
+          {/* <AnimatePresence> */}
+            {/* {error && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -203,8 +203,8 @@ const PredictionPage = () => {
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               </motion.div>
-            )}
-          </AnimatePresence>
+            )} */}
+          {/* </AnimatePresence> */}
         </div>
         <div className="w-full md:w-1/2">
           <PredictionDisplay

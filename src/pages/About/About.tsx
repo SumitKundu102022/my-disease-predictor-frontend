@@ -42,7 +42,6 @@ const AboutPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center text-center space-y-12 px-4 sm:px-6 lg:px-8 py-8">
-      {" "}
       {/* Added py-8 for some vertical padding */}
       <motion.h1
         initial={{ opacity: 0, y: -50 }}
@@ -74,6 +73,7 @@ const AboutPage = () => {
           healthcare professional for any health concerns.
         </p>
       </motion.section>
+      
       <motion.section
         variants={sectionVariants}
         initial="hidden"

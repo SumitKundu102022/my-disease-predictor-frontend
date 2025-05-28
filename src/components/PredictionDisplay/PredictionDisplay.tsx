@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@components/ui/Alert";
-import { CheckCircle, AlertTriangle, Loader2, Home } from "lucide-react";
+import { CheckCircle, AlertTriangle, Loader2, Home, Loader } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -76,7 +76,7 @@ const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
               .split("\n")
               .filter(
               (line: string) =>
-                line.trim().startsWith("*") || line.trim().startsWith("-")
+                line.trim().startsWith("*") || line.trim().startsWith("-") 
               )
               .map((line: string) => line.trim().substring(1).trim());
             setRemedies(parsedRemedies);
@@ -131,6 +131,7 @@ const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
+            className="lg:mt-22 md:14 sm:8 sm:col-span-2 bg-red-50 border border-red-200 rounded-lg p-4 shadow-sm"
           >
             <Alert variant="destructive">
               <AlertTriangle className="h-4 w-4" />
@@ -183,7 +184,7 @@ const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
               </h2>
               {remedyLoading && (
                 <div className="flex items-center justify-center py-4">
-                  <Loader2 className="animate-spin w-8 h-8 text-blue-500" />
+                  <Loader className="animate-spin w-8 h-8 text-blue-500" />
                   <p className="ml-2 text-gray-600">Generating remedies...</p>
                 </div>
               )}

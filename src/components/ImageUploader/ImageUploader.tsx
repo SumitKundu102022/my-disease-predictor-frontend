@@ -93,7 +93,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
             exit={{ opacity: 0, scale: 0.8 }}
             className="flex flex-col items-center gap-4 w-full"
           >
-            <div className="relative w-48 h-48 rounded-lg overflow-hidden border border-gray-200">
+            <div className="relative w-48 h-48 rounded-lg overflow-hidden border bg-white/80">
               <img
                 src={URL.createObjectURL(selectedImage)}
                 alt="Uploaded Preview"
@@ -164,11 +164,11 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
           </svg>
         </div>
       )}
-      {error && (
+      {/* {error && (
         <p className="absolute bottom-2 text-center text-red-500 text-sm w-full">
           {error}
         </p>
-      )}
+      )} */}
     </div>
   );
 };
