@@ -75,11 +75,27 @@ const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
             const parsedRemedies: RemedyParseResult["parsedRemedies"] = text
               .split("\n")
               .filter(
-              (line: string) =>
-                line.trim().startsWith("*") || line.trim().startsWith("-") 
+                (line: string) =>
+                  line.trim().startsWith("*") || line.trim().startsWith("-")
               )
-              .map((line: string) => line.trim().substring(1).trim());
+              .map((line: string) => {
+                // 1. Get rid of the leading * or - and trim
+                let cleanedLine = line.trim().substring(1).trim();
+                // 2. Remove the ** characters from the cleaned line here
+                cleanedLine = cleanedLine.replace(/\*\*/g, ""); // <--- Apply the replace here!
+                return cleanedLine;
+              });
+
+            // Now, parsedRemedies will already have the ** removed
             setRemedies(parsedRemedies);
+
+            // And in your JSX rendering block (where you use `remedies`):
+            // Assuming 'remedies' is your state variable that holds `parsedRemedies`
+            {
+              remedies.map((remedy, index) => (
+                <p key={index}>{remedy}</p> // No need for .replace here, as it's already cleaned
+              ));
+            }
           } else {
             setRemedyError(
               "Could not generate remedies. Unexpected LLM response."

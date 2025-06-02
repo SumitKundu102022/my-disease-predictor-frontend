@@ -17,6 +17,12 @@ const PredictionPage = () => {
   >([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  //3const [error, setError] = useState<string | null>(null);
+  // --- NEW STATE: To store the message for irrelevant images ---
+  const [irrelevantMessage, setIrrelevantMessage] = useState<string | null>(
+    null
+  );
+  // --- END NEW STATE ---
 
   const { setIsLoadingRoute } = useLoading(); // Use the loading context
 
@@ -47,7 +53,7 @@ const PredictionPage = () => {
   // Define your backend URL
   // IMPORTANT: Change this if your Flask backend is running on a different host/port
   //const backendUrl = "http://localhost:5000/predict";
-  const backendUrl = `${BACKEND_API_URL}/predict` // Use the environment variable for the backend URL
+  const backendUrl = `${BACKEND_API_URL}/predict`; // Use the environment variable for the backend URL
 
   // Function to handle image selection
   const handleImageSelect = useCallback((file: File) => {
@@ -105,21 +111,43 @@ const PredictionPage = () => {
         );
       }
 
-      const data = await response.json();
+      const responseData = await response.json();
 
-      if (data.predictions && Array.isArray(data.predictions)) {
-        // Sort predictions by probability in descending order
-        const sortedPredictions = data.predictions.sort(
+      // if (responseData.predictions && Array.isArray(responseData.predictions)) {
+      //   // Sort predictions by probability in descending order
+      //   const sortedPredictions = responseData.predictions.sort(
+      //     (a: any, b: any) => b.probability - a.probability
+      //   );
+      //   setPredictions(sortedPredictions);
+      // } else if (responseData.error) {
+      //   throw new Error(responseData.error);
+      // } else {
+      //   throw new Error(
+      //     'Unexpected response format from server. Missing "predictions" array.'
+      //   );
+      // }
+
+      // --- NEW LOGIC: Check for irrelevant image message ---
+      if (responseData.is_irrelevant && responseData.message) {
+        setIrrelevantMessage(responseData.message);
+        setPredictions([]); // Ensure no predictions are displayed
+      } else if (
+        responseData.predictions &&
+        Array.isArray(responseData.predictions)
+      ) {
+        const sortedPredictions = responseData.predictions.sort(
           (a: any, b: any) => b.probability - a.probability
         );
         setPredictions(sortedPredictions);
-      } else if (data.error) {
-        throw new Error(data.error);
+        setIrrelevantMessage(null); // Ensure no irrelevant message is displayed
+      } else if (responseData.error) {
+        throw new Error(responseData.error);
       } else {
         throw new Error(
-          'Unexpected response format from server. Missing "predictions" array.'
+          'Unexpected response format from server. Missing "predictions" array or "message".'
         );
       }
+      // --- END NEW LOGIC ---
 
       // Simulate an error
       // throw new Error("Failed to analyze image. Please try again.");
@@ -190,7 +218,7 @@ const PredictionPage = () => {
             </Button>
           </motion.div>
           {/* <AnimatePresence> */}
-            {/* {error && (
+          {/* {error && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}

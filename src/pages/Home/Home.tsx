@@ -8,7 +8,63 @@ import { cn } from "@/lib/utils";
 import Cards from "@/components/ui/Cards";
 import Marquee from "react-fast-marquee";
 import { useLoading } from '@/contexts/LoadingContext'; // Import useLoading
+import robo from "@/assets/images/robo.png"; // Import your robot image
 
+const textVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05, // Stagger animation for each character
+    },
+  },
+};
+
+const charVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const arrowVariants = {
+  hidden: { x: -100, opacity: 0 },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 10,
+      delay: 2.5, // Start after text animation
+    },
+  },
+};
+
+
+const robotImageVariants = {
+  hidden: { x: -100, opacity: 0 },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 10,
+      delay: 0.5, // Appear early
+    },
+  },
+
+  // New animation for floating up and down
+  float: {
+    y: [0, -40, 0], // Move up 20px, then back to original position
+    transition: {
+      duration: 3, // Duration of one complete up-down cycle
+      ease: "easeInOut", // Smooth easing
+      repeat: Infinity, // Repeat indefinitely
+      repeatType: "loop", // Loop the animation
+      delay: 1.5, // Start floating after initial slide-in
+    },
+  },
+};
 
 
 
@@ -79,17 +135,42 @@ const HomePage = () => {
     setIsLoadingRoute(false);
   }, [setIsLoadingRoute]); // Dependency array includes setIsLoadingRoute
 
+  const text = "Welcome to the Disease Prediction System";
+
   return (
     <>
       {/* Content */}
       <div className="flex flex-col items-center justify-center text-center space-y-6 z-10 relative text-white">
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-bold text--800 bg"
+        {/* Robot Image on the left */}
+        <motion.div
+          className="absolute left-0 top-1/2 -translate-y-1/2 hidden md:block mt-50" // Hide on small screens
+          variants={robotImageVariants}
+          initial="hidden"
+          animate={["visible", "float"]} // Animate both initial visibility and continuous floating
         >
-          Welcome to the Disease Prediction System
+          {/* Placeholder for a robot image */}
+          <img
+            src={robo} // Placeholder robot image
+            alt="AI Robot"
+            className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full shadow-lg object-cover"
+            onError={(e) => {
+              e.currentTarget.src =
+                "https://placehold.co/300x300/1a202c/ffffff?text=Robot"; // Fallback
+            }}
+          />
+        </motion.div>
+
+        <motion.h1
+          className="text-4xl sm:text-2xl md:text-3xl lg:text-5xl font-extrabold mb-4 drop-shadow-xl"
+          variants={textVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {text.split("").map((char, index) => (
+            <motion.span key={index} variants={charVariants}>
+              {char}
+            </motion.span>
+          ))}
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -100,7 +181,7 @@ const HomePage = () => {
           Upload an image, and our system will analyze it to predict potential
           diseases.
         </motion.p>
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
@@ -125,7 +206,39 @@ const HomePage = () => {
             }}
           >
             Get Started
-            <ArrowRight className="w-6 h-6" />
+            {/* <ArrowRight className="w-6 h-6" /> */}
+        {/* <ArrowRight className="w-8 h-8 sm:w-10 sm:h-10 text-green-400 animate-pulse" />
+          </Button>
+        </motion.div> */}
+
+        <motion.div
+          className="flex items-center space-x-4"
+          variants={arrowVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <Button
+            variant="default"
+            size="lg"
+            className={cn(
+              "px-8 py-3 rounded-full",
+              "shadow-lg transition-all duration-300",
+              "focus:outline-none focus:ring-0.1 focus:ring-orange-500 focus:ring-opacity-50",
+              // "focus:ring-offset-orange-300",
+              "gap-3 cursor-pointer",
+              "w-full bg-gradient-to-r from-blue-600 to-green-500 text-white py-3",
+              "hover:from-blue-700 hover:to-green-600 transition-colors duration-300",
+              "disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mb-5 mt-6"
+            )}
+            onClick={() => {
+              // Use window.location.href for simple navigation
+              setIsLoadingRoute(true); // Set loading true on button click
+              window.location.href = "/prediction";
+            }}
+          >
+            Get Started
+            {/* <ArrowRight className="w-6 h-6" /> */}
+            <ArrowRight className="w-7 h-7  text-green-400 animate-pulse" />
           </Button>
         </motion.div>
 
@@ -143,7 +256,7 @@ const HomePage = () => {
           </p>
         </div> */}
 
-        <Marquee
+        {/* <Marquee
           gradient={true}
           gradientColor="#0000773c"
           speed={30}
@@ -154,7 +267,7 @@ const HomePage = () => {
           {testimonials.map((testimonial, index) => (
             <Cards key={index} {...testimonial} />
           ))}
-        </Marquee>
+        </Marquee> */}
       </div>
     </>
   );

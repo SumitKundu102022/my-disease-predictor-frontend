@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "../lib/utils";
 import { Link } from "react-router-dom";
 import { Home } from "lucide-react";
-import { LeafyGreen } from "lucide-react"; // Example icon
+import { HeartPlus } from "lucide-react"; // Example icon
 import { Search } from "lucide-react";
 import { motion } from "framer-motion";
 import { ShaderGradientCanvas, ShaderGradient } from "@shadergradient/react";
@@ -11,6 +11,7 @@ import Input from "@/components/ui/Input";
 import bgImg from "@/assets/images/img5.jpg"; // Import your background image
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import { useLoading } from '@/contexts/LoadingContext'; // Import useLoading hook
+import FollowPointer from "@/components/ui/FollowPointer";
 
 
 // Placeholder background image URL - REPLACE THIS WITH YOUR ACTUAL OPTIMIZED IMAGE URL
@@ -57,6 +58,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, className }) => {
         />
       </ShaderGradientCanvas> */}
       <header className="relative z-20 w-full bg-gradient-to-r from-blue-600 to-green-500 text-white py-4 shadow-md sticky top-0 z-50">
+        <FollowPointer/>
         <div className="container mx-auto px-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           {/* Logo with LeafyGreen Icon */}
           <Link
@@ -66,8 +68,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, className }) => {
           >
             {" "}
             {/* Added flex and gap */}
-            <LeafyGreen className="w-7 h-7" />{" "}
-            {/* LeafyGreen Icon added here */}
+            <HeartPlus className="w-8 h-8" /> {/* LeafyGreen Icon added here */}
             MediScan
           </Link>
 
@@ -79,7 +80,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, className }) => {
                 { name: "Home", path: "/" },
                 { name: "Predict", path: "/prediction" },
                 { name: "About", path: "/about" },
-                { name: "Contact", path: "/contact" },
+                { name: "Contact us", path: "/contact" },
               ].map((item, index) => (
                 <motion.div
                   key={item.name}
