@@ -58,7 +58,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, className }) => {
         />
       </ShaderGradientCanvas> */}
       <header className="relative z-20 w-full bg-gradient-to-r from-blue-600 to-green-500 text-white py-4 shadow-md sticky top-0 z-50">
-        <FollowPointer/>
+        {/* <FollowPointer/> */}
         <div className="container mx-auto px-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           {/* Logo with LeafyGreen Icon */}
           <Link
@@ -103,14 +103,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, className }) => {
             </nav>
 
             {/* Search bar */}
-            <div className="relative w-full md:w-64">
+            {/* <div className="relative w-full md:w-64">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
               <Input
                 type="text"
                 placeholder="Search..."
                 className="pl-10 bg-white/90 text-black placeholder:text-gray-600 focus:ring-white"
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </header>

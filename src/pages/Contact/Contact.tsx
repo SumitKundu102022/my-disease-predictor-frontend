@@ -130,7 +130,7 @@ const ContactPage = () => {
             <MapPin className="w-10 h-10 text-red-600" />
             <span className="font-semibold">Visit Us</span>
             <p className="text-gray-700">
-              123 AI Street, Health City, CA 90210
+              123 AI Street, Haldia City, India 721657
             </p>
           </motion.div>
         </div>
