@@ -9,6 +9,7 @@ import Cards from "@/components/ui/Cards";
 import Marquee from "react-fast-marquee";
 import { useLoading } from '@/contexts/LoadingContext'; // Import useLoading
 import robo from "@/assets/images/robo.png"; // Import your robot image
+import artify from "@/assets/images/artify.png"; // Import your artify image
 
 const textVariants = {
   hidden: { opacity: 0 },
@@ -151,6 +152,24 @@ const HomePage = () => {
           {/* Placeholder for a robot image */}
           <img
             src={robo} // Placeholder robot image
+            alt="AI Robot"
+            className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full shadow-lg object-cover"
+            onError={(e) => {
+              e.currentTarget.src =
+                "https://placehold.co/300x300/1a202c/ffffff?text=Robot"; // Fallback
+            }}
+          />
+        </motion.div>
+
+        <motion.div
+          className="absolute right-0 top-1/2 -translate-y-1/2 hidden md:block mt-50" // Hide on small screens
+          variants={robotImageVariants}
+          initial="hidden"
+          animate={["visible", "float"]} // Animate both initial visibility and continuous floating
+        >
+          {/* Placeholder for a robot image */}
+          <img
+            src={artify} // Placeholder robot image
             alt="AI Robot"
             className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full shadow-lg object-cover"
             onError={(e) => {
