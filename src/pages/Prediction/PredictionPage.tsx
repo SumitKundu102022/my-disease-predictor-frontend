@@ -155,7 +155,20 @@ const PredictionPage = () => {
       // setPredictions(simulatedResponse.predictions);
     } catch (err: any) {
       console.error("Prediction failed:", err);
-      setError(err.message || "An unknown error occurred during prediction.");
+      // err.message || An unknown error occurred during prediction.
+      if (err.message.includes("NetworkError")) {
+        setError("Network error: Unable to connect to the backend. Please check your internet connection or try again later.");
+      } else if (err.message.includes("timeout")) {
+        setError("Request timed out: The server took too long to respond. Please try again later.");
+      }
+      else if (err.message.includes("Failed to fetch")) {
+        // Handle specific case for expired server plan
+        err.message="Server error"
+        setError(err.message + ": Your server plan has expired. Please upgrade to continue using the service.");
+      }
+      else {
+        setError(err.message || "An unknown error occurred during prediction.");
+      }
     } finally {
       setIsLoading(false);
     }

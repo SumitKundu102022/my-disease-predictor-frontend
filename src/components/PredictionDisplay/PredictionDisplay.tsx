@@ -150,7 +150,7 @@ const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
             className="lg:mt-22 md:14 sm:8 sm:col-span-2 bg-red-50 border border-red-200 rounded-lg p-4 shadow-sm"
           >
             <Alert variant="destructive">
-              <AlertTriangle className="h-4 w-4" />
+              {/* {<AlertTriangle className="h-4 w-4" />} */}
               <AlertTitle>Error</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Alert>
